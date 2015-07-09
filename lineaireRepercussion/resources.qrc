@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/lineaireRepercussion" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>
