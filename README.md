@@ -1,6 +1,6 @@
 # Qgis-plugin-lineaireRepercussion
 
-Petit plugin à usage interne permettant de lancer les procédures de répercussion des modifications du linéaire de référence sur la base de données du plan de circulation.
+Petit plugin à usage interne permettant de lancer les procédures de répercussion des modifications du linéaire de référence sur la base de données du plan de circulation directement depuis qgis.
 
 2 menus :
  - Paramètres: configuration des paramètres de connexion de la base de données du plan de circulation.
