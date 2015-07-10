@@ -241,7 +241,7 @@ class lineaireRepercussion:
             sql = "SELECT modification_lineaire.repercussion_modification_lineaire();"
             cur.execute(sql)
             conn.commit()
-            sql = "SELECT modification_lineaire.update_geometry_of_evenement();"
+            sql = "SELECT modification_lineaire.update_geometry_of_evenement_with_split();"
             cur.execute(sql)
             conn.commit()
             for notice in conn.notices:
