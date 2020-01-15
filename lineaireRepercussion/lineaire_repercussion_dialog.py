@@ -23,13 +23,13 @@
 
 import os
 
-from PyQt4 import QtGui, uic
+from PyQt5 import QtGui, QtWidgets, uic
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'lineaire_repercussion_dialog_base.ui'))
 
 
-class lineaireRepercussionDialog(QtGui.QDialog, FORM_CLASS):
+class lineaireRepercussionDialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         """Constructor."""
         super(lineaireRepercussionDialog, self).__init__(parent)

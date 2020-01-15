@@ -1,17 +1,10 @@
-# This file contains metadata for your plugin. Since 
-# version 2.0 of QGIS this is the proper way to supply 
-# information about a plugin. The old method of 
-# embedding metadata in __init__.py will 
-# is no longer supported since version 2.0.
-
-# This file should be included when you package your plugin.# Mandatory items:
 
 [general]
 name=Répercussion du linéaire
-qgisMinimumVersion=2.0
+qgisMinimumVersion=3.4
 description=Appel des fonctions sql de répercussion des changements sur le plan de circulation
 version=0.1
-author=PnC
+author=Parc national des Cévennes
 email=amandine.sahl@cevennes-parcnational.fr
 
 # End of mandatory metadata

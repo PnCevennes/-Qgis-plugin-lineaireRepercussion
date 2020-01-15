@@ -21,10 +21,10 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import Qt, QSettings
-from PyQt4.QtGui import QDialog, QFileDialog
+from PyQt5.QtCore import Qt, QSettings
+from PyQt5.QtWidgets import QDialog
 
-from ui_settingsdialog import Ui_db_connexion_form
+from .ui_settingsdialog import Ui_db_connexion_form
 
 class SettingsDialog(QDialog):
   def __init__(self, iface):
@@ -35,11 +35,11 @@ class SettingsDialog(QDialog):
 
     # load settings
     settings = QSettings()
-    self.ui.txt_db_host.setText(settings.value("/lineaireRepercussion/dbhost", "", type=unicode))
-    self.ui.txt_db_port.setText(settings.value("/lineaireRepercussion/dbport", "5432", type=unicode))
-    self.ui.txt_db_dbname.setText(settings.value("/lineaireRepercussion/dbname", "", type=unicode))
-    self.ui.txt_db_user.setText(settings.value("/lineaireRepercussion/dbuser", "", type=unicode))
-    self.ui.txt_db_password.setText(settings.value("/lineaireRepercussion/dbpassword", "", type=unicode))
+    self.ui.txt_db_host.setText(settings.value("/lineaireRepercussion/dbhost", "", type=str))
+    self.ui.txt_db_port.setText(settings.value("/lineaireRepercussion/dbport", "5432", type=str))
+    self.ui.txt_db_dbname.setText(settings.value("/lineaireRepercussion/dbname", "", type=str))
+    self.ui.txt_db_user.setText(settings.value("/lineaireRepercussion/dbuser", "", type=str))
+    self.ui.txt_db_password.setText(settings.value("/lineaireRepercussion/dbpassword", "", type=str))
 
   def accept(self):
     QDialog.accept(self)

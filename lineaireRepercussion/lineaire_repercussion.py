@@ -20,20 +20,24 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QSettings
-from PyQt4.QtGui import QAction, QIcon, QMessageBox, QProgressBar
-
+from __future__ import absolute_import
+from builtins import range
+from builtins import object
+from PyQt5.QtCore import QSettings, QTranslator, qVersion, QCoreApplication, QSettings
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QAction, QMessageBox, QProgressBar
 
 # Import the code for the dialog
-from lineaire_repercussion_dialog import lineaireRepercussionDialog
+from .lineaire_repercussion_dialog import lineaireRepercussionDialog
 import os.path
 
 
 from qgis.gui import QgsMessageBar
+from qgis.core import Qgis
 import psycopg2
 import time
 
-class lineaireRepercussion:
+class lineaireRepercussion(object):
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
@@ -191,7 +195,7 @@ class lineaireRepercussion:
         del self.toolbar
 
     def initParameters(self):
-        from settingsdialog import SettingsDialog
+        from .settingsdialog import SettingsDialog
         dialog = SettingsDialog(self.iface)
         accepted = dialog.exec_()
         if not accepted:
@@ -209,7 +213,7 @@ class lineaireRepercussion:
         progress = QProgressBar()
         progress.setMaximum(10)
         progressMessageBar.layout().addWidget(progress)
-        self.iface.messageBar().pushWidget(progressMessageBar, self.iface.messageBar().INFO)
+        self.iface.messageBar().pushWidget(progressMessageBar, Qgis.Info)
 
         if ret == QMessageBox.Ok:
             for i in range(10):
@@ -221,10 +225,10 @@ class lineaireRepercussion:
 
     def runSql(self):
         settings = QSettings()
-        dbhost = settings.value("/lineaireRepercussion/dbhost", "", type=unicode)
-        dbname = settings.value("/lineaireRepercussion/dbname", "", type=unicode)
-        dbuser = settings.value("/lineaireRepercussion/dbuser", "", type=unicode)
-        dbpassword = settings.value("/lineaireRepercussion/dbpassword", "", type=unicode)
+        dbhost = settings.value("/lineaireRepercussion/dbhost", "", type=str)
+        dbname = settings.value("/lineaireRepercussion/dbname", "", type=str)
+        dbuser = settings.value("/lineaireRepercussion/dbuser", "", type=str)
+        dbpassword = settings.value("/lineaireRepercussion/dbpassword", "", type=str)
         dbport = settings.value("/lineaireRepercussion/dbport",5432, type=int)
         
         dns = "dbname='%s' host='%s' user='%s' password='%s' port=%s" % (dbname, dbhost, dbuser, dbpassword, dbport)
@@ -233,7 +237,7 @@ class lineaireRepercussion:
            conn = psycopg2.connect(dns)
         except Exception as err:
             self.iface.messageBar().clearWidgets()
-            self.iface.messageBar().pushMessage("Erreur", "Connexion à la base de données impossible", level=QgsMessageBar.CRITICAL)
+            self.iface.messageBar().pushMessage("Erreur", "Connexion à la base de données impossible", level=Qgis.CRITICAL)
             return False
 
         try:
@@ -246,16 +250,16 @@ class lineaireRepercussion:
             conn.commit()
             for notice in conn.notices:
                  self.iface.messageBar().clearWidgets()
-                 self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=QgsMessageBar.INFO)
+                 self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=Qgis.INFO)
             sql = "SELECT modification_lineaire.update_geometry_of_evenement_without_split();"
             cur.execute(sql)
             conn.commit()
             for notice in conn.notices:
                 self.iface.messageBar().clearWidgets()
-                self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=QgsMessageBar.INFO)
+                self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=Qgis.INFO)
             conn.close()
         except Exception as err:
             self.iface.messageBar().clearWidgets()
-            self.iface.messageBar().pushMessage("Erreur", repr(err), level=QgsMessageBar.CRITICAL)
+            self.iface.messageBar().pushMessage("Erreur", repr(err), level=Qgis.CRITICAL)
             conn.close()
         pass
