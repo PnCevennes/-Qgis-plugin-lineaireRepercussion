@@ -202,7 +202,7 @@ class lineaireRepercussion(object):
             return False
 
     def run(self):
-        msgBox = QMessageBox();
+        msgBox = QMessageBox()
         msgBox.setWindowTitle(u"Répercussion des modification réalisées")
         msgBox.setInformativeText(u"Voulez-vous lancer la répercussion des changements du linéaire sur le plan de circulation ?")
         msgBox.setStandardButtons(QMessageBox.Ok |  QMessageBox.Cancel)
@@ -237,7 +237,7 @@ class lineaireRepercussion(object):
            conn = psycopg2.connect(dns)
         except Exception as err:
             self.iface.messageBar().clearWidgets()
-            self.iface.messageBar().pushMessage("Erreur", "Connexion à la base de données impossible", level=Qgis.CRITICAL)
+            self.iface.messageBar().pushMessage("Erreur", "Connexion à la base de données impossible", level=Qgis.Critical)
             return False
 
         try:
@@ -250,16 +250,16 @@ class lineaireRepercussion(object):
             conn.commit()
             for notice in conn.notices:
                  self.iface.messageBar().clearWidgets()
-                 self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=Qgis.INFO)
+                 self.iface.messageBar().pushMessage("Information", notice, level=Qgis.Info)
             sql = "SELECT modification_lineaire.update_geometry_of_evenement_without_split();"
             cur.execute(sql)
             conn.commit()
             for notice in conn.notices:
                 self.iface.messageBar().clearWidgets()
-                self.iface.messageBar().pushMessage("Information", notice.decode('utf-8'), level=Qgis.INFO)
+                self.iface.messageBar().pushMessage("Information", notice, level=Qgis.Info)
             conn.close()
         except Exception as err:
             self.iface.messageBar().clearWidgets()
-            self.iface.messageBar().pushMessage("Erreur", repr(err), level=Qgis.CRITICAL)
+            self.iface.messageBar().pushMessage("Erreur", repr(err), level=Qgis.Critical)
             conn.close()
         pass
